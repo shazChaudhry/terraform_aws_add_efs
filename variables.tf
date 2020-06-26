@@ -8,6 +8,11 @@ variable "instance_type" {
   description = "Define EC2 instance type"
 }
 
+variable "vpc_cidr_block" {
+  type = string
+  description = "Define VPC cidr block"
+}
+
 variable "DnsZoneName" {
   type        = string
   description = "DnsZoneName"

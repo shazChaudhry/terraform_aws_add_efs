@@ -56,11 +56,12 @@ The commands above will cuase the following to happen in your AWS account:
 ## Test
 
 1. Once Terraform has finised execution successfully, please wait for about 5mins for all reasources to be created and be in ready state
-1. SSH to each EC2 instance in turn
-    - `ssh admin@[FIRST_INSTANCE_IP]`
+1. SSH to each private EC2 instance in turn
+    - `ssh admin@[PUBLIC_INSTANCE_IP]`
+    - `ssh admin@[FIRST_PRIVATE_INSTANCE_IP]`
 1. Check "/efs" folder is created and then plase some content in that folder.
 1. SSH to the second box and check for the content created above. It should be the same
-    - `ssh admin@[SECOND_INSTANCE_IP]`
+    - `ssh admin@[SECOND_PRIVATE_INSTANCE_IP]`
 1. once all done, exit from your EC2 instances and then you may delete the infrastructure
     - ``terraform destroy -auto-approve``
 
