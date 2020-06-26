@@ -1,5 +1,6 @@
 resource "aws_efs_file_system" "efs" {
   creation_token = "EFS Shared Data"
+  encrypted      = true
   tags = {
     Name = "EFS Shared Data"
   }

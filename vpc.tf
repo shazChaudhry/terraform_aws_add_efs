@@ -3,7 +3,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
   name   = "vpc"
-  cidr   = "10.0.0.0/26"
+  cidr   = var.vpc_cidr_block
 
   enable_dns_hostnames    = true
   enable_dns_support      = true
@@ -15,8 +15,8 @@ module "vpc" {
   enable_nat_gateway = true
 
   azs             = data.aws_availability_zones.all.names
-  private_subnets = ["10.0.0.0/28", "10.0.0.16/28"]
-  public_subnets  = ["10.0.0.32/28", "10.0.0.48/28"]
+  private_subnets = [cidrsubnet(var.vpc_cidr_block, 2, 0), cidrsubnet(var.vpc_cidr_block, 2, 1)]
+  public_subnets  = [cidrsubnet(var.vpc_cidr_block, 2, 2)]
 
   dhcp_options_domain_name         = var.DnsZoneName
   dhcp_options_domain_name_servers = ["AmazonProvidedDNS"]
