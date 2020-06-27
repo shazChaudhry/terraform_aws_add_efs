@@ -14,7 +14,7 @@ I wanted to take a step further and automate the instructions. This includes:
 
 - Using modules from Terraform registry
 - Using cloud init config as user-data
-- Encripting data at rest
+- Encrypting data at rest
 
 The idea is that infrastructure should be setup without human intervention
 
@@ -29,8 +29,8 @@ This is how infrastrucutre is setup with Terraform:
 
 The commands above will cuase the following to happen in your AWS account:
 
-1. Create a VPC with four subnets; 2x private and 2x public
-1. Pass a cloud config template to EC2 instances during launch time. This template contains scripts to mount EFS
+1. Create a VPC with three subnets; 2x private and 1x public
+1. Pass cloud config templates to relevant EC2 instances during launch time. These templates contains scripts to mount EFS
 1. Create security groups needed for SSH and EFS ports
 1. Create EFS resources that will be added to EC2 instances
 1. Launch two EC2 instances in private subnets
@@ -46,17 +46,17 @@ The commands above will cuase the following to happen in your AWS account:
 ├── outputs.tf              -> Outputs EFS id
 ├── pics
 │   └── efs.png
-├── provider.tf             -> Configure S3 backend for saving state file remotely
+├── provider.tf             -> Sets AWS provider and optionally configures S3 backend for saving state file remotely
 ├── security.tf             -> Creates security groups needed for SSH and EFS ports
-├── terraform.tfvars        -> Define your region and EC2 instance type
+├── terraform.tfvars        -> Sets region and EC2 instance type variables
 ├── variables.tf
-└── vpc.tf                  -> Creates a VPC with 2x private and 2x public subnets
+└── vpc.tf                  -> Creates a VPC with 2x private and 1x public subnets. Private subnets will have access to internet via a NAT gateway
 ```
 
 ## Test
 
-1. Once Terraform has finised execution successfully, please wait for about 5mins for all reasources to be created and be in ready state
-1. SSH to each private EC2 instance in turn
+1. Once Terraform has finised the execution successfully, please wait for about 5mins for all reasources to be created and be in ready state
+1. SSH to each private EC2 instance in turn. See the AWS console for EC2 instances' details
     - `ssh admin@[PUBLIC_INSTANCE_IP]`
     - `ssh admin@[FIRST_PRIVATE_INSTANCE_IP]`
 1. Check "/efs" folder is created and then plase some content in that folder.
