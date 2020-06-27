@@ -57,7 +57,6 @@ module "efs_sg" {
       source_security_group_id = module.private_sg.this_security_group_id
     },
   ]
-  egress_rules = ["all-all"]
 
   tags = {
     Name        = "efs-sg"

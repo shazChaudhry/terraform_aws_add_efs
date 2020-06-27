@@ -8,7 +8,7 @@ module "public_asg" {
   lc_name         = "jumpbox-lc"
   image_id        = data.aws_ami.latest_amzn_ami.id
   instance_type   = var.instance_type
-  user_data       = data.template_file.cloud-init-efs.rendered
+  user_data       = data.template_file.cloud-config-users.rendered
   security_groups = [module.public_sg.this_security_group_id]
 
   # Auto scaling group
@@ -42,7 +42,7 @@ module "private_asg" {
   lc_name         = "private-instance-lc"
   image_id        = data.aws_ami.latest_amzn_ami.id
   instance_type   = var.instance_type
-  user_data       = data.template_file.cloud-init-efs.rendered
+  user_data       = data.template_cloudinit_config.cloud-config-users-and-runcmd.rendered
   security_groups = [module.private_sg.this_security_group_id]
 
   # Auto scaling group

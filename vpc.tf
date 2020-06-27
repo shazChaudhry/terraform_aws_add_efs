@@ -9,10 +9,8 @@ module "vpc" {
   enable_dns_support      = true
   map_public_ip_on_launch = true
   enable_dhcp_options     = true
-  # All private subnets will route their Internet traffic through this single NAT gateway. 
-  # The NAT gateway will be placed in the first public subnet in your public_subnets block
-  single_nat_gateway = true
-  enable_nat_gateway = true
+  single_nat_gateway      = true
+  enable_nat_gateway      = true
 
   azs             = data.aws_availability_zones.all.names
   private_subnets = [cidrsubnet(var.vpc_cidr_block, 2, 0), cidrsubnet(var.vpc_cidr_block, 2, 1)]
